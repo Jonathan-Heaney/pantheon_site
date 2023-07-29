@@ -8,13 +8,21 @@
 }
 
 .instructionContainer {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 
 .yearInput {
+  padding: 10px;
+  font-size: 18px;
+  border-color: black;
+  border-radius: 5px;
+  margin-right: 20px;
+  width: 300px;
+}
+
+.occupationInput {
   padding: 10px;
   font-size: 18px;
   border-color: black;
