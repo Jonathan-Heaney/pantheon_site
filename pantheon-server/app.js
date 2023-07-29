@@ -5,9 +5,15 @@ require('dotenv').config();
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 const db = pgp({
   connectionString: process.env.DATABASE_URL,
+});
+
+app.use((req, res, next) => {
+  console.log(`Request received: ${req.method} ${req.url}`);
+  next();
 });
 
 app.get('/people/:year', async (req, res) => {
@@ -23,6 +29,19 @@ app.get('/people/:year', async (req, res) => {
 
   try {
     const result = await db.any(query, values);
+    console.log('Server occupations: ', result); // debug log
+    res.json(result);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+app.get('/occupations', async (req, res) => {
+  const query = 'SELECT DISTINCT occupation FROM pantheon ORDER BY occupation';
+
+  try {
+    const result = await db.any(query);
     res.json(result);
   } catch (err) {
     console.error(err.message);

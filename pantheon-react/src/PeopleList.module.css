@@ -15,7 +15,7 @@
 
 .yearInput {
   padding: 10px;
-  font-size: 18px;
+  font-size: 14px;
   border-color: black;
   border-radius: 5px;
   margin-right: 20px;
@@ -24,11 +24,16 @@
 
 .occupationInput {
   padding: 10px;
-  font-size: 18px;
+  font-size: 14px;
   border-color: black;
   border-radius: 5px;
   margin-right: 20px;
   width: 300px;
+}
+
+input,
+select {
+  margin-left: 10px; /* Adjust the amount of space as needed */
 }
 
 .submitButton {

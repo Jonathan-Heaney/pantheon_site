@@ -1,15 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './PeopleList.module.css';
 
 const PeopleList = () => {
   const [year, setYear] = useState('');
-  const [occupation, setOccupation] = useState('');
   const [people, setPeople] = useState([]);
+  const [occupations, setOccupations] = useState([]);
+  const [selectedOccupation, setSelectedOccupation] = useState('');
 
+  useEffect(() => {
+    const fetchOccupations = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/occupations');
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(
+            `Error: ${response.status} ${response.statusText}\n${text}`
+          );
+        }
+        const data = await response.json();
+        setOccupations(data.map((item) => item.occupation));
+      } catch (error) {
+        console.error('Error fetching occupations:', error);
+      }
+    };
+
+    fetchOccupations();
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const response = await fetch(
-      `http://localhost:3001/people/${year}?occupation=${occupation}`
+      `http://localhost:3001/people/${year}?occupation=${selectedOccupation}`
     );
     const data = await response.json();
     setPeople(data);
@@ -23,22 +44,33 @@ const PeopleList = () => {
           alive in that year:
         </p>
       </div>
-      <form onSubmit={handleSubmit} className={styles.formContainer}>
-        <input
-          type="number"
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-          className={styles.yearInput}
-          placeholder="Enter a year"
-        />
-        <input
-          type="text"
-          value={occupation}
-          onChange={(e) => setOccupation(e.target.value)}
-          className={styles.occupationInput}
-          placeholder="Enter an occupation"
-        />
-        <button type="submit" className={styles.submitButton}>
+      <form className={styles.formContainer} onSubmit={handleSubmit}>
+        <label>
+          Enter a year:
+          <input
+            className={styles.yearInput}
+            type="number"
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Select an occupation:
+          <select
+            className={styles.occupationInput}
+            value={selectedOccupation}
+            onChange={(e) => setSelectedOccupation(e.target.value)}
+          >
+            <option value="">-- All --</option>
+            {occupations.map((occupation, index) => (
+              <option key={index} value={occupation}>
+                {occupation}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button className={styles.submitButton} type="submit">
           Submit
         </button>
       </form>
