@@ -1,0 +1,59 @@
+/* PeopleList.module.css */
+
+.formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.instructionContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+
+.yearInput {
+  padding: 10px;
+  font-size: 18px;
+  border-color: black;
+  border-radius: 5px;
+  margin-right: 20px;
+  width: 300px;
+}
+
+.submitButton {
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #0056b3;
+}
+
+.peopleList {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.person {
+  width: 60%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.person p {
+  margin: 10px 0;
+}
